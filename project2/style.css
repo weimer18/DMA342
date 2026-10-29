@@ -78,9 +78,9 @@ img.logo {
 }
 
 .gallery {
- margin:auto;
-	width:100%;
-	text-align: center; 
+	margin: auto;
+	width: 100%;
+	text-align: center;
 }
 
 .gallery img {
@@ -90,6 +90,16 @@ img.logo {
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-h3{
+h3 {
 	margin-top: 50px;
+}
+
+nav a {
+	transition: 0.3s ease all;
+}
+nav a:hover {
+	opacity: 0.6;
+}
+a.current {
+	text-decoration: underline;
 }

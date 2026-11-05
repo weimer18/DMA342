@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Jake Weimer's Portfolio</title>
+		<!-- Google fonts code-->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- End Google fonts code-->
+
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header>
+			<a href="index.html"
+				><img src="img/logo.png" class="logo" alt="Portfolio logo"
+			/></a>
+			<nav>
+				<a href="about.html">About </a>
+				<a href="gallery.html">Gallery</a>
+				<a href="news.html">News</a>
+				<a href="contact.html">Contact</a>
+				<a href="shop.html">Shop</a>
+			</nav>
+		</header>
+
+		<main>
+			<section>
+				<h1>About Me</h1>
+				<p>Hi! I'm Jake Weimer, a DMA major at Canisius University in Buffalo, NY.</p>
+				<p>
+				I began my journey in editing when I was very young. I always loved seeing the different editing styles that many of the YouTubers I followed used, and it inspired me to start learning how to edit on my own, so that I could one day bejust like those I watched online. I am currently in Canisius as a DMA Major studying different softwares and techniques so that I can have all the experience I need to be able to create my own entertaining edits!
+				</p>
+			</section>
+
+
+			<section>
+        <h2>Fun Facts!</h2>
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="question-title">
+              <img src="img/pointer.svg" alt="pointer" class="pointer" />
+              <h3>What is my favorite YouTube Series?</h3>
+            </div>
+            <p>
+              The Hardcore Series by PeanutButterGamer!
+            </p>
+          </div>
+          <!-- .accordion-item -->
+          <div class="accordion-item">
+            <div class="question-title">
+              <img src="img/pointer.svg" alt="pointer" class="pointer" />
+              <h3>What is my favorite game?</h3>
+            </div>
+            <p>Minecraft. I've loved it since I first played it.</p>
+          </div>
+          <!-- .accordion-item -->
+          <div class="accordion-item">
+            <div class="question-title">
+              <img src="img/pointer.svg" alt="pointer" class="pointer" />
+              <h3>What was the first game I ever played?</h3>
+            </div>
+            <p>Angry Birds on the iPad.</p>
+          </div>
+          <!-- .accordion-item -->
+          <div class="accordion-item">
+            <div class="question-title">
+              <img src="img/pointer.svg" alt="pointer" class="pointer" />
+              <h3>What was the first YouTuber I ever watched?</h3>
+            </div>
+            <p>Markiplier. I came home from school one day to find my brother watching him.</p>
+          </div>
+          <!-- .accordion-item -->
+        </div>
+        <!-- .acccordion -->
+      </section>
+		</main>
+
+		<footer>
+			<p>©2026 Jake Weimer</p>
+		</footer>
+	</body>
+	<script>
+    const questions = document.querySelectorAll('.accordion-item .question-title');
+    console.log(questions);
+    questions.forEach(function (question) {
+      question.addEventListener('click', revealAnswer);
+    });
+    function revealAnswer() {
+      const accordionItem = this.closest('.accordion-item');
+      const answer = accordionItem.querySelector('p');
+      const pointer = accordionItem.querySelector('img.pointer');
+      answer.classList.toggle('reveal');
+      pointer.classList.toggle('rotate-down');
+    }
+  </script>
+</html>

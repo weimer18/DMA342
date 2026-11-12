@@ -131,3 +131,64 @@ h3{
 .accordion-item img.pointer.rotate-down {
   transform: rotate(90deg);
 }
+/* cards */
+.cards {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc((100% - 3rem) / 4), 1fr));
+  gap: 1rem;
+}
+@media (max-width: 500px) {
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.card {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-light);
+  box-shadow: 0px 6px 6px var(--color-dark);
+  color: var(--color-light);
+}
+.cards h2 {
+  color: var(--color-dark);
+}
+.card h3 {
+  text-align: center;
+  padding: 0 0.5rem;
+  flex: 1;
+}
+.card p {
+  text-align: center;
+  padding: 0 0.5rem;
+}
+.card img {
+  max-width: 100%;
+  height: auto;
+}
+.card .button {
+  margin: 1rem 0;
+}
+/* lightbox */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+.lightbox:target {
+  display: flex; /* Shows the lightbox when URL hash matches */
+}
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  cursor: pointer;
+}

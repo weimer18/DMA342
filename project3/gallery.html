@@ -36,23 +36,58 @@
 		</header>
 
 		<main>
-			<section>
-				<h1>My Latest Creations:</h1>
-				<div class="gallery">
-					<img src="img/ShirtLogo.png" alt="" />
-					<img src="img/Graphics_and_Effects.png" alt="" />
-					<img src="img/YoutubeAnimation.png" alt="" />
-					<img src="img/Video_Creation.png" alt="" />
-					<img src="img/J&J.png" alt="" />
-					<img src="img/Juxtaposition.png" alt="" />
-					<img src="img/Map.png" alt="" />
-					<img src="img/Stamp.png" alt="" />
-				</div>
-			</section>
+	<section>
+			<div class="cards">
+          <div class="card">
+            <img src="img/ShirtLogo.png" alt="Shirt" />
+          </div>
+          <div class="card">
+            <img src="img/Graphics_and_Effects.png" alt="Graphics and Effects" />
+          </div>
+          <div class="card">
+            <img src="img/YoutubeAnimation.png" alt="Youtube Animation" />
+          </div>
+          <div class="card">
+            <img src="img/Video_Creation.png" alt="Video Creation" />
+          </div>
+          <div class="card">
+            <img src="img/J&J.png" alt="Jack and Jill" />
+          </div>
+          <div class="card">
+            <img src="img/Juxtaposition.png" alt="Juxtaposition" />
+          </div>
+		  <div class="card">
+            <img src="img/Map.png" alt="Map" />
+          </div>
+          <div class="card">
+            <img src="img/Stamp.png" alt="Stamp" />
+          </div>
+        </div>
+		</section>
 		</main>
 
 		<footer>
 			<p>©2026 Jake Weimer</p>
 		</footer>
 	</body>
+	<div class="lightbox"></div>
+	<script>
+      const lightbox = document.querySelector('.lightbox');
+      const galleryImages = document.querySelectorAll('.cards .card img');
+      galleryImages.forEach(function (image) {
+        image.addEventListener('click', function () {
+          lightbox.replaceChildren(image.cloneNode());
+          lightbox.style.display = 'flex';
+        });
+      });
+      function closeLightbox() {
+        lightbox.style.display = 'none';
+      }
+      lightbox.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeLightbox();
+        }
+      });
+    </script>
 </html>

@@ -173,7 +173,7 @@ h3 {
 .news .card h2 {
 	font-size: 1.2rem;
 }
-.news .card p {
+.news .news-cards .card p {
 	color: var(--color-dark);
 }
 .card img {

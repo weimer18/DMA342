@@ -36,53 +36,176 @@
 		<main>
 			<section>
 				<h1>Latest Updates:</h1>
-				<div class="cards">
-					<div class="card">
-						<h2>YouTube channel starting up!</h2>
-						<p>
-							I am planning to start uploading content on my YouTube channel very soon! Be sure to
-							check it out when it comes!
-						</p>
-						<button>Read More</button>
-					</div>
-					<!-- .card -->
+				<search>
+					<form class="search_form">
+						<fieldset>
+							<label for="site-search">Search news:</label>
+							<input type="search" id="site-search" name="q" placeholder="Search the archives..." />
+						</fieldset>
+						<fieldset>
+							<label for="site-search">Filter results:</label>
+							<select id="site-search-filter" name="f">
+								<option value="all">All News</option>
+								<option value="local_events">Local events</option>
+								<option value="new_flavors">New Flavors</option>
+								<option value="politics">Politics</option>
+							</select>
+						</fieldset>
+						<fieldset class="site-search-sort">
+							<label for="site-search">Sort results:</label>
+							<div class="sort_controls">
+								<select id="site-search-sort" name="s">
+									<option value="date">Date</option>
+									<option value="popular">Popularity</option>
+									<option value="author">Author</option>
+								</select>
+								<div class="sort_buttons">
+									<button><img src="img/arrow-down.svg" alt="" /></button>
+									<button><img src="img/arrow-up.svg" alt="" /></button>
+								</div>
+							</div>
+						</fieldset>
+						<button type="submit">Search</button>
+					</form>
+				</search>
 
-					<div class="card">
-						<h2>YouTube channel starting up!</h2>
-						<p>
-							I am planning to start uploading content on my YouTube channel very soon! Be sure to
-							check it out when it comes!
-						</p>
-						<button>Read More</button>
-					</div>
-					<!-- .card -->
+				<p class="news-status">Loading articles...</p>
+				<div class="cards news-cards"></div>
 
-					<div class="card">
-						<h2>YouTube channel starting up!</h2>
-						<p>
-							I am planning to start uploading content on my YouTube channel very soon! Be sure to
-							check it out when it comes!
-						</p>
-						<button>Read More</button>
-					</div>
-					<!-- .card -->
-
-					<div class="card">
-						<h2>YouTube channel starting up!</h2>
-						<p>
-							I am planning to start uploading content on my YouTube channel very soon! Be sure to
-							check it out when it comes!
-						</p>
-						<button>Read More</button>
-					</div>
-					<!-- .card -->
-				</div>
-				<!--  .cards -->
+				<article class="news-article" hidden>
+					<button type="button" class="button back-button">Back to News</button>
+					<h2></h2>
+					<p class="article-byline"></p>
+					<time></time>
+					<img class="article-image" src="" alt="" />
+					<div class="article-content"></div>
+				</article>
 			</section>
 		</main>
 
 		<footer>
 			<p>©2026 Jake Weimer</p>
 		</footer>
+		<script>
+			const articleFiles = [
+				'youtube-news.json',
+				'youtube-news.json',
+				'youtube-news.json',
+				'youtube-news.json',
+				'youtube-news.json',
+				'youtube-news.json',
+			];
+
+			const cards = document.querySelector('.news-cards');
+			const status = document.querySelector('.news-status');
+			const search = document.querySelector('search');
+			const searchForm = document.querySelector('.search_form');
+			const searchInput = document.querySelector('#site-search');
+			const articleView = document.querySelector('.news-article');
+			const articles = [];
+
+			function formatDate(date) {
+				return new Intl.DateTimeFormat('en-US', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					timeZone: 'UTC',
+				}).format(new Date(date));
+			}
+
+			function showArticle(article) {
+				articleView.querySelector('h2').textContent = article.title;
+				articleView.querySelector('.article-byline').textContent = `By ${article.author}`;
+
+				const time = articleView.querySelector('time');
+				time.dateTime = article.date;
+				time.textContent = `Posted on ${formatDate(article.date)}`;
+
+				const image = articleView.querySelector('.article-image');
+				image.src = article.featured_img;
+				image.alt = article.featured_img_alt;
+
+				articleView.querySelector('.article-content').innerHTML = article.content;
+				cards.hidden = true;
+				search.hidden = true;
+				status.hidden = true;
+				articleView.hidden = false;
+				articleView.scrollIntoView();
+			}
+
+			function renderCards(items) {
+				cards.replaceChildren();
+
+				items.forEach(function (article) {
+					const card = document.createElement('div');
+					card.className = 'card';
+
+					const title = document.createElement('h3');
+					title.textContent = article.title;
+
+					const image = document.createElement('img');
+					image.src = article.featured_img;
+					image.alt = article.featured_img_alt;
+
+					const link = document.createElement('a');
+					link.href = '#';
+					link.className = 'button';
+					link.textContent = 'Read More';
+					link.addEventListener('click', function (event) {
+						event.preventDefault();
+						showArticle(article);
+					});
+
+					card.append(title, image, link);
+					cards.append(card);
+				});
+
+				status.textContent = items.length ? '' : 'No articles match your search.';
+				status.hidden = items.length > 0;
+			}
+
+			Promise.all(
+				articleFiles.map(function (file) {
+					return fetch(`news/${file}`).then(function (response) {
+						if (!response.ok) {
+							throw new Error(`Could not load ${file}`);
+						}
+						return response.json();
+					});
+				})
+			)
+				.then(function (results) {
+					articles.push(
+						...results.map(function (result) {
+							return result.article;
+						})
+					);
+					renderCards(articles);
+				})
+				.catch(function (error) {
+					console.error(error);
+					status.textContent = 'Sorry, the news could not be loaded. Please try again later.';
+				});
+
+			searchForm.addEventListener('submit', function (event) {
+				event.preventDefault();
+				const query = searchInput.value.trim().toLowerCase();
+				renderCards(
+					articles.filter(function (article) {
+						return (
+							article.title.toLowerCase().includes(query) ||
+							article.content.toLowerCase().includes(query)
+						);
+					})
+				);
+			});
+
+			articleView.querySelector('.back-button').addEventListener('click', function () {
+				articleView.hidden = true;
+				cards.hidden = false;
+				search.hidden = false;
+				renderCards(articles);
+			});
+		</script>
 	</body>
 </html>

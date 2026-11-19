@@ -1,0 +1,10 @@
+{
+  "article": {
+    "title": "Shoutout Time!",
+    "date": "2026-11-19",
+    "author": "Jake Weimer",
+    "featured_img": "img/shoutout.png",
+    "featured_img_alt": "Megaphone",
+    "content": "<p>Shoutout to Ben Dunkle for helping me with this project and website!</p>"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "article": {
+    "title": "My First Collab!",
+    "date": "2026-11-19",
+    "author": "Jake Weimer",
+    "featured_img": "img/collab.png",
+    "featured_img_alt": "Collab Thumbnail",
+    "content": "<p>Fellow creator Mimi Cat made a video featuring yours truly! Be sure to check it out!</p>"
+  }
+}

@@ -41,30 +41,60 @@
 			<section>
 <h3> Have a question? Fill out the form here!</h3>
 			
-			<form action="#">
-        <div>
-          <label for="first_name">First Name</label>
-          <input type="text" name="first_name" id="first_name" placeholder="First Name" />
-        </div>
-        <div>
-          <label for="last_name">Last Name</label>
-          <input type="text" name="last_name" id="last_name" placeholder="Last Name" />
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="Email" />
-        </div>
-        <div>
-          <label for="comments">Comments</label>
-          <textarea name="comments" id="comments" placeholder="Comments"> </textarea>
-        </div>
-        <input type="submit" />
-      </form>
-	  </section>
+			<form action="https://formspree.io/f/mwloawbk" method="post" id="contact_form">
+					<label for="first_name">First name</label>
+					<input type="text" name="first_name" id="first_name" autocomplete="given-name" />
+
+					<label for="last_name">Last name</label>
+					<input type="text" name="last_name" id="last_name" autocomplete="family-name" />
+
+					<label for="email">Email address</label>
+
+					<input
+						type="email"
+						name="email"
+						id="email"
+						autocomplete="email"
+						aria-describedby="email_help"
+						required
+					/>
+					<p id="email_help">For example, name@example.com</p>
+
+					<label for="comments">Message</label>
+					<textarea name="comments" id="comments" rows="6" required></textarea>
+					<label for="quiz">Prove you're human</label>
+					<input
+						type="text"
+						name="quiz"
+						id="quiz"
+						placeholder="What color is the a cloudless sky?"
+						required
+					/>
+					<button type="submit">Send message</button>
+					<input type="hidden" name="_subject" value="New Scoops and Smiles contact message" />
+				</form>
 		</main>
 
 		<footer>
 			<p>©2026 Jake Weimer</p>
 		</footer>
+		<script>
+			const contactForm = document.getElementById('contact_form');
+			const quizAnswer = document.getElementById('quiz');
+			quizAnswer.addEventListener('input', function () {
+				quizAnswer.setCustomValidity('');
+			});
+
+			contactForm.addEventListener('submit', function (event) {
+				const answer = quizAnswer.value.trim().toLowerCase();
+
+				if (answer !== 'blue') {
+					event.preventDefault();
+					quizAnswer.setCustomValidity('Please enter the correct answer.');
+					quizAnswer.reportValidity();
+					quizAnswer.focus();
+				}
+			});
+		</script>
 	</body>
 </html>

@@ -9,23 +9,20 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap"
-			rel="stylesheet"
-		/>
+			rel="stylesheet" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
-			rel="stylesheet"
-		/>
+			rel="stylesheet" />
 		<!-- End Google fonts code-->
 
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<header>
-			<a href="index.html"
-				><img src="img/logo.png" class="logo" alt="Portfolio logo"
-			/></a>
+			<a href="index.html"><img src="img/logo.png" class="logo"
+					alt="Portfolio logo" /></a>
 			<nav>
 				<a href="about.html">About </a>
 				<a href="gallery.html">Gallery</a>
@@ -36,58 +33,123 @@
 		</header>
 
 		<main>
-	<section>
-			<div class="cards">
-          <div class="card">
-            <img src="img/ShirtLogo.png" alt="Shirt" />
-          </div>
-          <div class="card">
-            <img src="img/Graphics_and_Effects.png" alt="Graphics and Effects" />
-          </div>
-          <div class="card">
-            <img src="img/YoutubeAnimation.png" alt="Youtube Animation" />
-          </div>
-          <div class="card">
-            <img src="img/Video_Creation.png" alt="Video Creation" />
-          </div>
-          <div class="card">
-            <img src="img/J&J.png" alt="Jack and Jill" />
-          </div>
-          <div class="card">
-            <img src="img/Juxtaposition.png" alt="Juxtaposition" />
-          </div>
-		  <div class="card">
-            <img src="img/Map.png" alt="Map" />
-          </div>
-          <div class="card">
-            <img src="img/Stamp.png" alt="Stamp" />
-          </div>
-        </div>
-		</section>
+			<section>
+				<div class="cards">
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+							<img src="img/ShirtLogo.png" alt="Shirt" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/Graphics_and_Effects.png" alt="Graphics and Effects" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/YoutubeAnimation.png" alt="Youtube Animation" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/Video_Creation.png" alt="Video Creation" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/J&J.png" alt="Jack and Jill" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/Juxtaposition.png" alt="Juxtaposition" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/Map.png" alt="Map" />
+						</button>
+					</div>
+					<div class="card">
+						<button class="gallery-trigger" type="button"
+							aria-label="View image">
+						<img src="img/Stamp.png" alt="Stamp" />
+						</button>
+					</div>
+				</div>
+			</section>
 		</main>
 
 		<footer>
 			<p>©2026 Jake Weimer</p>
 		</footer>
+		<div class="lightbox"
+			role="dialog"
+			aria-modal="true"
+			aria-label="Artwork preview"
+			hidden><button class="lightbox-close" type="button"
+				aria-label="Close artwork preview">
+				Close
+			</button>
+			<img class="lightbox-image" src alt />
+		</div>
+
 	</body>
-	<div class="lightbox"></div>
+
 	<script>
-      const lightbox = document.querySelector('.lightbox');
-      const galleryImages = document.querySelectorAll('.cards .card img');
-      galleryImages.forEach(function (image) {
-        image.addEventListener('click', function () {
-          lightbox.replaceChildren(image.cloneNode());
-          lightbox.style.display = 'flex';
-        });
-      });
-      function closeLightbox() {
-        lightbox.style.display = 'none';
-      }
-      lightbox.addEventListener('click', closeLightbox);
-      document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-          closeLightbox();
-        }
-      });
+const lightbox = document.querySelector('.lightbox');
+const lightboxImage = lightbox.querySelector('.lightbox-image');
+const closeButton = lightbox.querySelector('.lightbox-close');
+const galleryTriggers = document.querySelectorAll('.gallery-trigger');
+
+let triggerBeforeLightbox;
+
+function openLightbox(trigger) {
+    triggerBeforeLightbox = trigger;
+
+    const sourceImage = trigger.querySelector('img');
+    lightboxImage.src = sourceImage.src;
+    lightboxImage.alt = sourceImage.alt;
+
+    lightbox.hidden = false;
+    closeButton.focus();
+}
+
+function closeLightbox() {
+    lightbox.hidden = true;
+    lightboxImage.src = '';
+    lightboxImage.alt = '';
+
+    if (triggerBeforeLightbox) {
+        triggerBeforeLightbox.focus();
+    }
+}
+
+galleryTriggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+        openLightbox(trigger);
+    });
+});
+
+closeButton.addEventListener('click', closeLightbox);
+
+lightbox.addEventListener('click', function (event) {
+    if (event.target === lightbox) {
+        closeLightbox();
+    }
+});
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !lightbox.hidden) {
+        closeLightbox();
+    }
+});
     </script>
 </html>
